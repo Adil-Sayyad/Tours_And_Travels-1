@@ -131,8 +131,12 @@ def book(request,id):
         obj3=Table1.objects.values('image').get(id=id)
         district=obj2['district']
         location=obj4['location'] 
-        obj= payment.objects.values(value1).get(From=value,To=location)
-        pay1=obj[value1]
+        try:
+            obj= payment.objects.values(value1).get(From=value,To=location)
+            pay1=obj[value1]
+        except payment.DoesNotExist:
+            pay1 = 5000  # Default prize if route is missing in payment table
+        
         pay2=obj3['image']
         print(district)
         print(pay1)
